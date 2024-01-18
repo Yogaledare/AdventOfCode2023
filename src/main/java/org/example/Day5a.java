@@ -10,16 +10,12 @@ public class Day5a {
         List<String> lines = readLines("input5a.txt");
         long[] seeds = parseSeeds(lines);
         Map<ResourcePair, List<Mapping>> mappings = parseAllMappings(lines);
-//        printMappings(mappings);
-//        long dest = findMappedDest(54, mappings.get(new ResourcePair(Resource.FERTILIZER, Resource.WATER)));
-//        System.out.println(dest);
         long[] locations = findLocations(seeds, mappings);
         System.out.println(Arrays.toString(seeds) + " (seeds)");
         System.out.println(Arrays.toString(locations) + " (locations)");
 
         long min = findMin(locations);
         System.out.println("Min: " + min);
-
     }
 
 
@@ -130,35 +126,14 @@ public class Day5a {
         }
 
         while (iterator.hasNext()) {
-
             String line = iterator.next();
 
             if (line.endsWith("map:")) {
                 ResourcePair key = parseMappingHeader(line);
-                List<Mapping> localMapping = parseMappingSection(iterator);
+                List<Mapping> localMapping = parseMappingBody(iterator);
                 mappings.put(key, localMapping);
             }
         }
-
-        return mappings;
-    }
-
-
-    private static List<Mapping> parseMappingSection(Iterator<String> listIterator) {
-        List<Mapping> mappings = new ArrayList<>();
-
-        while (listIterator.hasNext()) {
-            String line = listIterator.next();
-
-            if (line.isEmpty()) {
-                break;
-            }
-
-            Mapping mapping = parseMapping(line);
-            mappings.add(mapping);
-        }
-
-        Collections.sort(mappings);
 
         return mappings;
     }
@@ -173,7 +148,27 @@ public class Day5a {
     }
 
 
-    private static Mapping parseMapping(String line) {
+    private static List<Mapping> parseMappingBody(Iterator<String> listIterator) {
+        List<Mapping> mappings = new ArrayList<>();
+
+        while (listIterator.hasNext()) {
+            String line = listIterator.next();
+
+            if (line.isEmpty()) {
+                break;
+            }
+
+            Mapping mapping = parseMappingLine(line);
+            mappings.add(mapping);
+        }
+
+        Collections.sort(mappings);
+
+        return mappings;
+    }
+
+
+    private static Mapping parseMappingLine(String line) {
         long[] nums = parseNumLine(line);
         long sourceStart = nums[1];
         long destStart = nums[0];
@@ -203,39 +198,3 @@ public class Day5a {
 
 
 }
-
-
-//    private static long findMappedDest(long source, List<Mapping> mappings) {
-//
-//        int low = 0;
-//        int high = mappings.size() - 1;
-//
-//        while (low <= high) {
-//
-//            int mid = (low + high) / 2;
-//
-//            Mapping currentMapping = mappings.get(mid);
-//
-////            System.out.println("searching current mapping: " + currentMapping);
-//            long intervalStart = currentMapping.sourceStart;
-//            long intervalEnd = intervalStart + currentMapping.range - 1;
-//
-////            System.out.println("interval start: " + intervalStart + ", interval end: " + intervalEnd + ", source: " + source);
-//
-//            if (source < intervalStart) {
-////                System.out.println("was lower");
-//                high = mid - 1;
-//            } else if (source > intervalEnd) {
-////                System.out.println("was higher");
-//                low = mid + 1;
-//            } else {
-////                System.out.println("was inside");
-//                long delta = source - intervalStart;
-//                return currentMapping.destStart + delta;
-//            }
-//        }
-//
-//        return source;
-//    }
-
-
