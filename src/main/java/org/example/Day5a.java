@@ -169,7 +169,7 @@ public class Day5a {
 
 
     private static Mapping parseMappingLine(String line) {
-        long[] nums = parseNumLine(line);
+        long[] nums = parseNumLineToLong(line);
         long sourceStart = nums[1];
         long destStart = nums[0];
         long range = nums[2];
@@ -181,11 +181,11 @@ public class Day5a {
     private static long[] parseSeeds(List<String> lines) {
         String seeds = lines.get(0);
         String numbers = seeds.replaceAll("seeds:\\s+", "");
-        return parseNumLine(numbers);
+        return parseNumLineToLong(numbers);
     }
 
 
-    private static long[] parseNumLine(String line) {
+    public static long[] parseNumLineToLong(String line) {
         String[] numStrings = line.split("\\s+");
         long[] nums = new long[numStrings.length];
 
