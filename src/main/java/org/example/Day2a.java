@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.*;
 
-import static org.example.Day1a.readLines;
+import static org.example.InputFilesReader.readLines;
 
 public class Day2a {
 

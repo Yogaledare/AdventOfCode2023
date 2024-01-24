@@ -2,8 +2,7 @@ package org.example;
 
 import java.util.List;
 
-import static org.example.Day1a.readLines;
-import static org.example.Day5a.parseNumLineToLong;
+import static org.example.InputFilesReader.readLines;
 
 public class Day6a {
 
